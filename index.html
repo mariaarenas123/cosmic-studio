@@ -1,0 +1,385 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Cosmic Studio.com</title>
+<meta name="description" content="Cosmic Studio: páginas web, creación de contenido y chatbots para tu negocio.">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Unbounded:wght@200;300&display=swap">
+<link rel="stylesheet" href="css/estilos.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+<script>
+  (function () {
+    var d = document.documentElement;
+    d.classList.add('js');
+    var calma = false;
+    try { calma = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    // Visores que estiran el marco a todo el alto del contenido: no hay scroll propio, se muestra la parte 3 quieta
+    if (window.innerHeight > 2200) d.classList.add('marco-alto');
+    if (calma) d.classList.add('is-calma');
+    d.classList.add('is-cargando');
+    // Seguro: si Three.js no carga (sin internet o sin WebGL), se muestran los 3 enlaces igual
+    setTimeout(function () {
+      if (window.__escenaLista) return;
+      d.classList.remove('is-cargando'); d.classList.add('sin-webgl', 'is-entra');
+      var c = document.getElementById('carga'); if (c) c.classList.add('is-lista');
+      var n = document.getElementById('planetas'); if (n) n.classList.add('is-activa');
+    }, 15000);
+  })();
+</script>
+
+<a class="saltar" href="#servicios">Saltar a los servicios</a>
+
+<!-- Pantalla de carga: nombre y barra fina (hasta que las texturas estén listas) -->
+<div class="carga" id="carga" aria-hidden="true">
+  <p class="carga__nombre">Cosmic Studio</p>
+  <div class="carga__barra"><span id="carga-barra"></span></div>
+</div>
+
+<!-- Barra superior fija: marca + menú 1·2·3 (el menú se oculta mientras se ven los planetas) -->
+<header class="barra">
+  <div class="marca" id="marca">
+    <a class="marca__enlace" href="#inicio" aria-label="Cosmic Studio, volver al inicio">Cosmic Studio</a>
+  </div>
+  <nav class="menu" id="menu" aria-label="Secciones">
+    <a class="menu__enlace" href="#paginas-web"><span class="menu__largo">Páginas web</span><span class="menu__corto">Web</span></a>
+    <a class="menu__enlace" href="#chatbots">Chatbots</a>
+    <a class="menu__enlace" href="#creacion-de-contenido"><span class="menu__largo">Creación de contenido</span><span class="menu__corto">Contenido</span></a>
+  </nav>
+</header>
+
+<main id="contenido">
+
+  <!-- ============ APERTURA: ESCENA 3D (se conserva) ============ -->
+  <section class="viaje" id="inicio" aria-labelledby="titulo-inicio">
+    <div class="escena" id="escena">
+      <canvas class="escena__lienzo" id="lienzo" aria-hidden="true"></canvas>
+
+      <div class="parte1" id="parte1">
+        <h1 class="titulo" id="titulo-inicio"><span>Cosmic</span> <span>Studio</span></h1>
+        <p class="deslizar" aria-hidden="true"><span>Desliza para explorar</span><i class="deslizar__linea"></i></p>
+      </div>
+
+      <!-- Los 3 planetas: 1 Tierra → Páginas web · 2 Marte → Chatbots · 3 Saturno → Creación de contenido.
+           PARA CAMBIAR NOMBRES O ENLACES: edita href, aria-label y el texto del nombre.
+           data-planeta une cada enlace con su planeta 3D: no lo cambies. -->
+      <nav class="planetas" id="planetas" aria-label="Servicios">
+        <a class="planeta" data-planeta="tierra" href="#paginas-web" aria-label="Ir a Páginas web">
+          <span class="planeta__nombre">Páginas web</span>
+        </a>
+        <a class="planeta" data-planeta="marte" href="#chatbots" aria-label="Ir a Chatbots">
+          <span class="planeta__nombre">Chatbots</span>
+        </a>
+        <a class="planeta" data-planeta="saturno" href="#creacion-de-contenido" aria-label="Ir a Creación de contenido">
+          <span class="planeta__nombre">Creación de contenido</span>
+        </a>
+      </nav>
+    </div>
+  </section>
+
+  <div class="servicios" id="servicios">
+
+    <!-- ============ 1 · PÁGINAS WEB: carrusel lateral infinito (1.1, 1.2, 1.3) ============ -->
+    <section class="web" id="paginas-web" aria-labelledby="t-web">
+      <h2 class="oculto" id="t-web">1 · Páginas web</h2>
+      <div class="carrusel" id="carrusel" role="region" aria-roledescription="carrusel" aria-label="Páginas web">
+        <div class="carrusel__pista" id="carrusel-pista">
+
+          <!-- 1.1 · Abrebocas: frase grande + sticker de web futurista -->
+          <article class="diapo diapo--intro" aria-roledescription="diapositiva" aria-label="Páginas web, 1 de 3">
+            <div class="intro">
+              <p class="etiqueta">Páginas web</p>
+              <div class="intro__fila">
+                <h3 class="intro__frase" aria-label="Hacemos que tu negocio conecte">
+                  <span>Hacemos que tu</span>
+                  <span>negocio c<span class="anillo-o" aria-hidden="true"><svg viewBox="0 0 120 100" focusable="false">
+                    <circle class="anillo-o__letra" cx="60" cy="56" r="27"/>
+                    <ellipse class="anillo-o__orbita" cx="60" cy="56" rx="56" ry="17" transform="rotate(-16 60 56)"/>
+                    <ellipse class="anillo-o__luz" cx="60" cy="56" rx="56" ry="17" transform="rotate(-16 60 56)" pathLength="100"/>
+                  </svg></span>necte</span>
+                </h3>
+                <!-- Sticker: web futurista -->
+                <svg class="sticker sticker--web" viewBox="0 0 220 200" aria-hidden="true" focusable="false">
+                  <defs>
+                    <linearGradient id="sw-planeta" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBE9C4"/><stop offset="1" stop-color="#B9823F"/></linearGradient>
+                    <linearGradient id="sw-ventana" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#161A2C"/><stop offset="1" stop-color="#07080F"/></linearGradient>
+                  </defs>
+                  <!-- borde blanco recortado -->
+                  <g class="sticker__borde">
+                    <rect x="22" y="58" width="150" height="116" rx="18"/>
+                    <circle cx="166" cy="56" r="34"/>
+                    <path d="M40 40 l5 -14 l5 14 l14 5 l-14 5 l-5 14 l-5 -14 l-14 -5z"/>
+                  </g>
+                  <!-- ventana del navegador -->
+                  <rect x="22" y="58" width="150" height="116" rx="18" fill="url(#sw-ventana)" stroke="#E9C27A" stroke-width="2.5"/>
+                  <path d="M22 76 a18 18 0 0 1 18 -18 h114 a18 18 0 0 1 18 18 v8 h-150z" fill="#1E2236"/>
+                  <circle cx="40" cy="72" r="4" fill="#E9C27A"/><circle cx="53" cy="72" r="4" fill="#A9AEB4"/><circle cx="66" cy="72" r="4" fill="#A9AEB4"/>
+                  <!-- contenido: código y bloques con brillo -->
+                  <path d="M52 112 l-14 12 l14 12 M84 112 l14 12 l-14 12 M74 106 l-12 36" fill="none" stroke="#E9C27A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="110" y="104" width="46" height="8" rx="4" fill="#F4F4F6"/>
+                  <rect x="110" y="120" width="34" height="8" rx="4" fill="#A9AEB4"/>
+                  <rect x="110" y="136" width="40" height="8" rx="4" fill="#A9AEB4" opacity=".6"/>
+                  <rect x="38" y="152" width="60" height="10" rx="5" fill="#E9C27A"/>
+                  <!-- planeta con anillo -->
+                  <ellipse cx="166" cy="56" rx="50" ry="13" transform="rotate(-18 166 56)" fill="none" stroke="#F4F4F6" stroke-width="3" opacity=".55"/>
+                  <circle cx="166" cy="56" r="26" fill="url(#sw-planeta)"/>
+                  <path d="M118 70 a50 13 -18 0 0 96 -30" fill="none" stroke="#F4F4F6" stroke-width="3"/>
+                  <!-- destellos -->
+                  <path d="M40 40 l5 -14 l5 14 l14 5 l-14 5 l-5 14 l-5 -14 l-14 -5z" fill="#E9C27A"/>
+                  <circle cx="196" cy="110" r="3" fill="#F4F4F6"/><circle cx="132" cy="24" r="2.5" fill="#E9C27A"/>
+                </svg>
+              </div>
+              <p class="intro__sub">Páginas a la medida de tu negocio, rápidas en el celular y con botón directo a tu WhatsApp.</p>
+              <button class="boton boton--contorno" type="button" id="ver-estilos">Ver estilos
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <!-- 1.2 · Estilo completo (ejemplo real: Odontología Dra. Mónica Parra) -->
+          <article class="diapo" aria-roledescription="diapositiva" aria-label="Estilo completo, 2 de 3">
+            <div class="diapo__texto">
+              <p class="etiqueta">Estilo completo</p>
+              <h3 class="diapo__titulo">Una página que deja huella</h3>
+              <p class="diapo__desc">Para marcas que quieren destacar: varias secciones, animaciones al hacer scroll y un diseño hecho a la medida de tu identidad.</p>
+              <p class="diapo__ejemplo">Ejemplo: Odontología Dra. Mónica Parra</p>
+              <a class="boton" href="https://wa.me/573001468669?text=Hola%20Cosmic%20Studio%2C%20me%20interesa%20una%20p%C3%A1gina%20web%20completa" target="_blank" rel="noopener">Quiero este estilo</a>
+            </div>
+            <figure class="diapo__visual">
+              <div class="dispositivos">
+                <div class="portatil"><div class="portatil__pantalla"><img src="img/ejemplo-odontologia-pc.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Página de Odontología Dra. Mónica Parra vista en computador: fondo oscuro con detalles dorados y el título Sonríe con confianza"></div><div class="portatil__base"></div></div>
+                <div class="telefono"><img src="img/ejemplo-odontologia-movil.webp" width="480" height="1039" loading="lazy" decoding="async" alt="La misma página vista en celular"></div>
+              </div>
+            </figure>
+          </article>
+
+          <!-- 1.3 · Estilo sencillo (ejemplo real: Parche Perrón) -->
+          <article class="diapo" aria-roledescription="diapositiva" aria-label="Estilo sencillo, 3 de 3">
+            <div class="diapo__texto">
+              <p class="etiqueta">Estilo sencillo</p>
+              <h3 class="diapo__titulo">Para empezar con buen pie</h3>
+              <p class="diapo__desc">Si apenas estás arrancando: una página clara con lo esencial, quién eres, qué ofreces y un botón para que te escriban.</p>
+              <p class="diapo__ejemplo">Ejemplo: Parche Perrón</p>
+              <p class="precio">Desde $250.000</p>
+              <a class="boton" href="https://wa.me/573001468669?text=Hola%20Cosmic%20Studio%2C%20me%20interesa%20una%20p%C3%A1gina%20web%20sencilla" target="_blank" rel="noopener">Quiero empezar</a>
+            </div>
+            <figure class="diapo__visual">
+              <div class="dispositivos">
+                <div class="portatil"><div class="portatil__pantalla"><img src="img/ejemplo-parche-perron-pc.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Página de Parche Perrón vista en computador: fondo amarillo con el logo del perro caliente"></div><div class="portatil__base"></div></div>
+                <div class="telefono"><img src="img/ejemplo-parche-perron-movil.webp" width="480" height="1039" loading="lazy" decoding="async" alt="La misma página vista en celular"></div>
+              </div>
+            </figure>
+          </article>
+        </div>
+
+        <div class="carrusel__control">
+          <button class="carrusel__flecha" type="button" id="carrusel-ant" aria-label="Diapositiva anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <div class="carrusel__puntos" id="carrusel-puntos">
+            <button type="button" aria-label="Ver Páginas web"></button>
+            <button type="button" aria-label="Ver Estilo completo"></button>
+            <button type="button" aria-label="Ver Estilo sencillo"></button>
+          </div>
+          <button class="carrusel__flecha" type="button" id="carrusel-sig" aria-label="Diapositiva siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 · CHATBOTS: descripción fija + demostración que cambia cada 30 s ============ -->
+    <section class="bots" id="chatbots" aria-labelledby="t-chatbots">
+      <div class="bots__texto">
+        <p class="etiqueta">Asistentes con IA</p>
+        <div class="bots__fila">
+          <h2 class="seccion__titulo" id="t-chatbots">Chatbots</h2>
+          <!-- Sticker: inteligencia artificial -->
+          <svg class="sticker sticker--ia" viewBox="0 0 200 190" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="si-burbuja" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B2040"/><stop offset="1" stop-color="#090A14"/></linearGradient>
+              <linearGradient id="si-chispa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3D6"/><stop offset="1" stop-color="#E9C27A"/></linearGradient>
+            </defs>
+            <g class="sticker__borde">
+              <path d="M40 22 h120 a26 26 0 0 1 26 26 v70 a26 26 0 0 1 -26 26 h-62 l-34 26 l6 -26 h-30 a26 26 0 0 1 -26 -26 v-70 a26 26 0 0 1 26 -26z"/>
+              <circle cx="176" cy="22" r="14"/>
+            </g>
+            <path d="M40 22 h120 a26 26 0 0 1 26 26 v70 a26 26 0 0 1 -26 26 h-62 l-34 26 l6 -26 h-30 a26 26 0 0 1 -26 -26 v-70 a26 26 0 0 1 26 -26z" fill="url(#si-burbuja)" stroke="#E9C27A" stroke-width="2.5"/>
+            <!-- circuito -->
+            <g fill="none" stroke="#A9AEB4" stroke-width="2" opacity=".7" stroke-linecap="round">
+              <path d="M30 60 h18 l10 10"/><path d="M30 104 h22 l8 -8"/><path d="M170 58 h-18 l-10 10"/><path d="M170 106 h-20 l-8 -8"/>
+            </g>
+            <g fill="#A9AEB4"><circle cx="30" cy="60" r="3.5"/><circle cx="30" cy="104" r="3.5"/><circle cx="170" cy="58" r="3.5"/><circle cx="170" cy="106" r="3.5"/></g>
+            <!-- chispa de IA -->
+            <path d="M100 42 C104 70 110 76 136 82 C110 88 104 94 100 122 C96 94 90 88 64 82 C90 76 96 70 100 42z" fill="url(#si-chispa)"/>
+            <path d="M138 44 C139.5 52 141 53.5 149 55 C141 56.5 139.5 58 138 66 C136.5 58 135 56.5 127 55 C135 53.5 136.5 52 138 44z" fill="#F4F4F6"/>
+            <text x="100" y="140" text-anchor="middle" font-family="Unbounded, system-ui, sans-serif" font-weight="300" font-size="15" letter-spacing="3" fill="#E9C27A">IA</text>
+            <circle cx="176" cy="22" r="8" fill="#E9C27A"/>
+          </svg>
+        </div>
+        <p class="bots__desc">Instalamos un asistente en tu página web o en tu WhatsApp que responde a tus clientes al instante, a cualquier hora: precios, horarios, pedidos y citas. Cuando alguien está listo para comprar, te avisa.</p>
+        <a class="boton" href="https://wa.me/573001468669?text=Hola%20Cosmic%20Studio%2C%20me%20interesa%20un%20chatbot" target="_blank" rel="noopener">Quiero mi chatbot</a>
+      </div>
+
+      <!-- PARA USAR CAPTURAS REALES: reemplaza el contenido de cada .demo__pantalla por un <img>. -->
+      <div class="demo" id="demo" aria-roledescription="demostración" aria-label="Ejemplo de chatbot conversando con un cliente">
+        <div class="demo__pantallas">
+          <figure class="demo__pantalla is-activa" data-nombre="Página web">
+            <div class="chat-web" role="img" aria-label="Chatbot en una página web: el cliente pide agendar una cita y el asistente le ofrece horarios">
+              <div class="maqueta__barra"><i></i><i></i><i></i></div>
+              <div class="chat-web__pagina"><span></span><span></span><span></span></div>
+              <div class="chat-web__ventana">
+                <p class="chat-web__cabeza"><span class="chat__punto"></span>Asistente de tu negocio</p>
+                <div class="chat__mensajes">
+                  <p class="msg msg--bot">¡Hola! ¿En qué te puedo ayudar?</p>
+                  <p class="msg msg--cliente">Quiero agendar una cita para mañana</p>
+                  <p class="msg msg--bot">Claro. Mañana tengo libre a las 10:00 a. m. y a las 3:00 p. m. ¿Cuál prefieres?</p>
+                  <p class="msg msg--cliente">A las 3:00, por favor</p>
+                  <p class="msg msg--bot">Listo, tu cita quedó para mañana a las 3:00 p. m. Te enviamos un recordatorio.</p>
+                </div>
+              </div>
+            </div>
+            <figcaption>En tu página web</figcaption>
+          </figure>
+          <figure class="demo__pantalla" data-nombre="WhatsApp">
+            <div class="chat-wa" role="img" aria-label="Chatbot en WhatsApp: el cliente pregunta el horario y si hacen domicilios, y el asistente le responde">
+              <p class="chat-wa__cabeza"><span class="chat-wa__avatar"></span><span>Tu negocio<small>en línea</small></span></p>
+              <div class="chat__mensajes chat-wa__mensajes">
+                <p class="msg msg--cliente">Hola, ¿a qué hora abren hoy?</p>
+                <p class="msg msg--bot">¡Hola! Hoy abrimos de 8:00 a. m. a 7:00 p. m. ¿Quieres ver el menú?</p>
+                <p class="msg msg--cliente">Sí, ¿y hacen domicilios?</p>
+                <p class="msg msg--bot">Sí, hacemos domicilios en Marinilla. Aquí tienes el menú y te paso con un asesor para tu pedido.</p>
+              </div>
+            </div>
+            <figcaption>En WhatsApp</figcaption>
+          </figure>
+        </div>
+        <div class="demo__control" role="group" aria-label="Elegir ejemplo">
+          <button type="button" aria-pressed="true">Página web</button>
+          <button type="button" aria-pressed="false">WhatsApp</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 · CREACIÓN DE CONTENIDO ============ -->
+    <section class="contenido" id="creacion-de-contenido" aria-labelledby="t-contenido">
+      <!-- 3.1 Banner -->
+      <div class="banner">
+        <p class="etiqueta">Fotos · Publicidad · Videos</p>
+        <h2 class="banner__titulo" id="t-contenido">Creación de contenido</h2>
+        <p class="banner__desc">Fotos, publicidad y videos que hacen que tu marca se vea como se merece.</p>
+        <nav class="banner__menu" aria-label="Tipos de contenido">
+          <a class="pastilla" href="#contenido-fotos">Fotos</a>
+          <a class="pastilla" href="#contenido-publicidad">Publicidad</a>
+          <a class="pastilla" href="#contenido-videos">Videos</a>
+        </nav>
+      </div>
+
+      <!-- 3.2 Fotos — PORTAFOLIO: la animación se definirá más adelante (data-animacion) -->
+      <section class="sub" id="contenido-fotos" aria-labelledby="t-fotos">
+        <div class="sub__cabeza">
+          <p class="etiqueta">Portafolio</p>
+          <h3 class="sub__titulo" id="t-fotos">Fotos</h3>
+          <p class="sub__desc">Retratos, producto y estilo de vida con luz cuidada.</p>
+        </div>
+        <ul class="portafolio" data-animacion="pendiente">
+          <li><button class="obra" type="button" data-grande="img/lifestyle-flores-2000.webp"><img src="img/lifestyle-flores-720.webp" width="720" height="480" loading="lazy" decoding="async" alt="Retrato de perfil de una mujer de cabello rizado oliendo flores fucsia"></button></li>
+          <li><button class="obra" type="button" data-grande="img/lifestyle-retrato-1360.webp"><img src="img/lifestyle-retrato-600.webp" width="600" height="900" loading="lazy" decoding="async" alt="Retrato de una mujer de vestido blanco apoyada en un tronco"></button></li>
+          <li><button class="obra" type="button" data-grande="img/lifestyle-jardin-1360.webp"><img src="img/lifestyle-jardin-600.webp" width="600" height="900" loading="lazy" decoding="async" alt="Mujer de vestido blanco en un jardín tropical"></button></li>
+        </ul>
+      </section>
+
+      <!-- 3.3 Publicidad -->
+      <section class="sub" id="contenido-publicidad" aria-labelledby="t-publicidad">
+        <div class="sub__cabeza">
+          <p class="etiqueta">Portafolio</p>
+          <h3 class="sub__titulo" id="t-publicidad">Publicidad</h3>
+          <p class="sub__desc">Piezas para campañas, lanzamientos y redes que venden tu producto.</p>
+        </div>
+        <ul class="portafolio portafolio--completa" data-animacion="pendiente">
+          <li><button class="obra" type="button" data-grande="img/pub-del-buey-caja-1200.webp" style="--ar: 1024 / 1280"><img src="img/pub-del-buey-caja-600.webp" width="600" height="750" loading="lazy" decoding="async" alt="Caja de regalo Del Buey con lazo rosado y el texto No lo dejes para el final"></button></li>
+          <li><button class="obra" type="button" data-grande="img/pub-del-buey-dia-madre-1200.webp" style="--ar: 1080 / 1350"><img src="img/pub-del-buey-dia-madre-600.webp" width="600" height="750" loading="lazy" decoding="async" alt="Anchetas Del Buey para el Día de la Madre con café, chocolatina, vela y tarjetas"></button></li>
+          <li><button class="obra" type="button" data-grande="img/pub-del-buey-cafe-1200.webp" style="--ar: 1024 / 1536"><img src="img/pub-del-buey-cafe-600.webp" width="600" height="900" loading="lazy" decoding="async" alt="Bolsa de café Del Buey variedad Caturro entre granos y café molido sobre fondo azul"></button></li>
+          <li><button class="obra" type="button" data-grande="img/pub-allegretto-italianisima-1200.webp" style="--ar: 768 / 1376"><img src="img/pub-allegretto-italianisima-600.webp" width="600" height="1075" loading="lazy" decoding="async" alt="Hamburguesa Italianisima de Allegretto Express saliendo de papel kraft"></button></li>
+          <li><button class="obra" type="button" data-grande="img/pub-del-buey-bolsas-1200.webp" style="--ar: 1086 / 1448"><img src="img/pub-del-buey-bolsas-600.webp" width="600" height="800" loading="lazy" decoding="async" alt="Tres bolsas de café Del Buey de distintos tamaños sobre fondo azul"></button></li>
+        </ul>
+      </section>
+
+      <!-- 3.4 Videos — cada video es un <li> con <video class="video-pieza">; los .video-vacio son espacios libres para los próximos -->
+      <section class="sub" id="contenido-videos" aria-labelledby="t-videos">
+        <div class="sub__cabeza">
+          <p class="etiqueta">Portafolio</p>
+          <h3 class="sub__titulo" id="t-videos">Videos</h3>
+          <p class="sub__desc">Reels, videos de producto y resúmenes de eventos.</p>
+        </div>
+        <ul class="portafolio portafolio--videos" data-animacion="pendiente">
+          <li>
+            <figure class="video">
+              <video class="video-pieza" controls playsinline preload="none" width="720" height="1280"
+                     poster="video/del-buey-regalo-madres-portada.webp"
+                     aria-label="Reel de Del Buey: regalo para el Día de la Madre con café, chocolatina Nativo, vela y tarjetas">
+                <source src="video/del-buey-regalo-madres.mp4" type="video/mp4">
+              </video>
+              <figcaption>Del Buey · Regalo de madres</figcaption>
+            </figure>
+          </li>
+          <li class="video--horizontal">
+            <figure class="video">
+              <video class="video-pieza" controls playsinline preload="none" width="1280" height="720"
+                     poster="video/cafe-maestro-portada.webp"
+                     aria-label="Video de Café Maestro: el local, sus postres, la preparación del café y el café Reserva Candelaria">
+                <source src="video/cafe-maestro.mp4" type="video/mp4">
+              </video>
+              <figcaption>Café Maestro · Video del local</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure class="video">
+              <video class="video-pieza" controls playsinline preload="none" width="720" height="1280"
+                     poster="video/phylum-cerveza-portada.webp"
+                     aria-label="Reel de Phylum Cerveza artesanal: el bar, los grifos, el servicio de cerveza y la botella Apolo 11">
+                <source src="video/phylum-cerveza.mp4" type="video/mp4">
+              </video>
+              <figcaption>Phylum · Cerveza artesanal</figcaption>
+            </figure>
+          </li>
+        </ul>
+      </section>
+    </section>
+  </div>
+
+  <!-- ============ CIERRE: ASESORÍA ============ -->
+  <section class="asesoria" id="asesoria" aria-labelledby="t-asesoria">
+    <h2 class="asesoria__titulo" id="t-asesoria">¿Listo para despegar?</h2>
+    <p class="asesoria__texto">Cuéntanos de tu negocio y te asesoramos sin costo: te decimos qué necesitas, por dónde empezar y cuánto cuesta.</p>
+    <a class="boton boton--grande" href="https://wa.me/573001468669?text=Hola%20COSMIC%2C%20quiero%20solicitar%20una%20asesor%C3%ADa" target="_blank" rel="noopener">Solicitar asesoría por WhatsApp</a>
+  </section>
+</main>
+
+<footer class="pie">
+  <ul class="pie__enlaces">
+    <li><a class="enlace" href="https://www.instagram.com/c0sm1c.st/" target="_blank" rel="noopener">Instagram @c0sm1c.st</a></li>
+    <li><a class="enlace" href="mailto:cosmicstudio888@gmail.com">cosmicstudio888@gmail.com</a></li>
+  </ul>
+  <p>Marinilla, Antioquia · Oriente antioqueño y a distancia</p>
+  <p>© <span id="anio">2026</span> Cosmic Studio</p>
+  <p class="pie__credito">Texturas de planetas: <a class="enlace" href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noopener">Solar System Scope</a>, licencia <a class="enlace" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.</p>
+</footer>
+
+<dialog class="visor" id="visor" aria-label="Foto ampliada">
+  <img id="visor-img" src="" alt="">
+  <button class="visor__cerrar" type="button" id="visor-cerrar">Cerrar</button>
+</dialog>
+
+<script src="js/marco.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
+<script src="js/secciones.js" defer></script>
+<script type="module" src="js/escena.js"></script>
+
+</body></html>
